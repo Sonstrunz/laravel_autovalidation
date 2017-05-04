@@ -4,7 +4,7 @@ namespace Autovalidation;
 
 use Illuminate\Support\Facades\Input;
 
-class MyModel extends \Eloquent {
+class AutovalidationModel extends \Eloquent {
     public static $autoValidate = true;
 
     protected $notValidate = array('id');

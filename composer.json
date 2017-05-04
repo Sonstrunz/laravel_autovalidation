@@ -1,6 +1,6 @@
 {
-    "name": "raffaele/autovalidation",
-    "description": "This package provides to autogenerate rules from database constraints with default message.",
+    "name": "raffaele/laravel_autovalidation",
+    "description": "This package provides to autogenerate rules from database constraints with default message and autovalidate your model before save or update.",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -11,6 +11,12 @@
     ],
     "minimum-stability": "dev",
     "require": {
+      "php": ">=5.6.0",
       "doctrine/dbal": "^2.5"
-    }
+    },
+    "autoload": {
+       "psr-4": {
+           "raffaele\\Autovalidation\\": "src"
+       }
+   }
 }

@@ -2,11 +2,9 @@
 
 namespace Autovalidation;
 
-//use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Input;
 
 class MyModel extends \Eloquent {
-
     public static $autoValidate = true;
 
     protected $notValidate = array('id');
@@ -15,6 +13,11 @@ class MyModel extends \Eloquent {
 
     protected $messages = array();
 
+    /**
+     * [boot description]
+     * @method boot
+     * @return [type] [description]
+     */
     protected static function boot() {
         // This is an important call, makes sure that the model gets booted
         // properly!
@@ -40,6 +43,11 @@ class MyModel extends \Eloquent {
         });
     }
 
+    /**
+     * [validate description]
+     * @method validate
+     * @return [type]   [description]
+     */
     public function validate(){
       $data = Input::all();
       $validator = \Validator::make($data, $this->rules);
@@ -58,8 +66,12 @@ class MyModel extends \Eloquent {
      }
     }
 
+    /**
+     * [getConstraints description]
+     * @method getConstraints
+     * @return [type]         [description]
+     */
     public function getConstraints() {
-
       $table = $this->getTable();
       $columns = $this->getConnection()->getSchemaBuilder()->getColumnListing($table);
 
@@ -69,6 +81,11 @@ class MyModel extends \Eloquent {
       }
     }
 
+    /**
+     * [setRules description]
+     * @method setRules
+     * @param  [type]   $constraints [description]
+     */
     public function setRules($constraints) {
       if(!in_array($constraints->getName(), $this->notValidate)){
         if($constraints->getNotNull()) {
@@ -77,10 +94,20 @@ class MyModel extends \Eloquent {
       }
     }
 
+    /**
+     * [getRules description]
+     * @method getRules
+     * @return [type]   [description]
+     */
     public function getRules(){
       return $this->rules;
     }
 
+    /**
+     * [getMessages description]
+     * @method getMessages
+     * @return [type]      [description]
+     */
     public function getMessages(){
       return $this->messages;
     }

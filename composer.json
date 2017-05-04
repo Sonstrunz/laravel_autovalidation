@@ -1,0 +1,16 @@
+{
+    "name": "raffaele/autovalidation",
+    "description": "This package provides to autogenerate rules from database constraints with default message.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Raffaele",
+            "email": "raffaele.carelle@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+      "doctrine/dbal": "^2.5"
+    }
+}

@@ -38,7 +38,7 @@ class AutovalidationModel extends \Eloquent {
           if($model::$autoValidate) {
               $model->getConstraints();
               $validator = $model->validate();
-
+              //dd($model->rules);
               if($validator != null){
                 redirect($model->redirectTo)->withInput()->withErrors($validator);
                 return false;
@@ -94,30 +94,29 @@ class AutovalidationModel extends \Eloquent {
      */
     public function setRules($constraints) {
       $table = $this->getTable();
+
       if(!in_array($constraints->getName(), $this->notValidate)){
+        $this->rules[$constraints->getName()] = "";
         switch ($constraints->getType()->getName()) {
-          case 'string':
-            $this->rules[$constraints->getName()] = "";
-            break;
           case 'integer':
           case 'smallint':
           case 'bigint':
           case 'float':
-            $this->rules[$constraints->getName()] = "numeric";
+            $this->rules[$constraints->getName()] .= "numeric";
             break;
           case 'decimal':
-            $this->rules[$constraints->getName()] = "numeric|between:0,99.99";
+            $this->rules[$constraints->getName()] .= "numeric|between:0,99.99";
             break;
           case 'boolean':
-            $this->rules[$constraints->getName()] = "boolean";
+            $this->rules[$constraints->getName()] .= "boolean";
             break;
           case 'date':
           case 'time':
           case 'datetime':
-            $this->rules[$constraints->getName()] = "date";
+            $this->rules[$constraints->getName()] .= "date";
             break;
           case 'json':
-            $this->rules[$constraints->getName()] = "json";
+            $this->rules[$constraints->getName()] .= "json";
             break;
         }
 

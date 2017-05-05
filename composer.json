@@ -9,7 +9,6 @@
             "email": "raffaele.carelle@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
       "php": ">=5.6.0",
       "doctrine/dbal": "^2.5"

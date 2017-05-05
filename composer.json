@@ -15,7 +15,7 @@
     },
     "autoload": {
        "psr-4": {
-           "raffaele\\Autovalidation\\": "src"
+           "raffaele\\": "src"
        }
    }
 }

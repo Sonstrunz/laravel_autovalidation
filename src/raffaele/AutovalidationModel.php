@@ -12,8 +12,6 @@ class AutovalidationModel extends \Eloquent {
 
     public $rules = array();
 
-    public $redirectTo = '/user/create';
-
     public $messages = array();
 
     public $passwordLabelCandidate = array('password', 'passwd');
@@ -38,9 +36,9 @@ class AutovalidationModel extends \Eloquent {
           if($model::$autoValidate) {
               $model->getConstraints();
               $validator = $model->validate();
-              //dd($model->rules);
+
               if($validator != null){
-                redirect($model->redirectTo)->withInput()->withErrors($validator);
+                redirect()->back()->withInput()->withErrors($validator);
                 return false;
               }else{
                 return true;

@@ -8,17 +8,17 @@ class AutovalidationModel extends \Eloquent {
 
     public static $autoValidate = true;
 
-    protected $notValidate = array('id');
+    public $notValidate = array('id');
 
-    protected $rules = array();
+    public $rules = array();
 
-    protected $redirectTo = '/user/create';
+    public $redirectTo = '/user/create';
 
-    protected $messages = array();
+    public $messages = array();
 
-    protected $passwordLabelCandidate = array('password', 'passwd');
+    public $passwordLabelCandidate = array('password', 'passwd');
 
-    protected $emailLabelCandidate = array('email', 'mail');
+    public $emailLabelCandidate = array('email', 'mail');
 
     /**
      * [boot description]

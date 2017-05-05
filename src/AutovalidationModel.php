@@ -14,6 +14,10 @@ class AutovalidationModel extends \Eloquent {
 
     protected $messages = array();
 
+    private $passwordLabelCandidate = array('password');
+
+    private $emailLabelCandidate = array('email');
+
     /**
      * [boot description]
      * @method boot
@@ -31,7 +35,7 @@ class AutovalidationModel extends \Eloquent {
           // and update.
           if($model::$autoValidate) {
               $model->getConstraints();
-
+                //dd($model->rules);
               $validator = $model->validate();
 
               if($validator != null){
@@ -89,8 +93,43 @@ class AutovalidationModel extends \Eloquent {
      */
     public function setRules($constraints) {
       if(!in_array($constraints->getName(), $this->notValidate)){
+
+        switch ($constraints->getType()->getName()) {
+          case 'string':
+            $this->rules[$constraints->getName()] = "alpha_num";
+            break;
+          case 'integer':
+          case 'smallint':
+          case 'bigint':
+          case 'float':
+            $this->rules[$constraints->getName()] = "numeric";
+            break;
+          case 'decimal':
+            $this->rules[$constraints->getName()] = "numeric|between:0,99.99";
+            break;
+          case 'boolean':
+            $this->rules[$constraints->getName()] = "boolean";
+            break;
+          case 'date':
+          case 'time':
+          case 'datetime':
+            $this->rules[$constraints->getName()] = "date";
+            break;
+          case 'json':
+            $this->rules[$constraints->getName()] = "json";
+            break;
+        }
+
         if($constraints->getNotNull()) {
-          $this->rules[$constraints->getName()] = "required";
+          $this->rules[$constraints->getName()] .= "|required";
+        }
+        if(isset($this->emailLabelCandidate) && in_array($constraints->getName(), $this->emailLabelCandidate)){
+          $this->rules[$constraints->getName()] .= "|email|unique";
+        }else if(isset($this->passwordLabelCandidate) && in_array($constraints->getName(), $this->passwordLabelCandidate)){
+          $this->rules[$constraints->getName()] .= "|confirmed";
+        }
+        if($constraints->getLength() != null){
+          $this->rules[$constraints->getName()] .= "|max:".$constraints->getLength();
         }
       }
     }

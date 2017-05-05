@@ -5,6 +5,7 @@ namespace Autovalidation;
 use Illuminate\Support\Facades\Input;
 
 class AutovalidationModel extends \Eloquent {
+
     public static $autoValidate = true;
 
     protected $notValidate = array('id');
@@ -30,7 +31,7 @@ class AutovalidationModel extends \Eloquent {
           // and update.
           if($model::$autoValidate) {
               $model->getConstraints();
-              //return redirect()->back();
+
               $validator = $model->validate();
 
               if($validator != null){

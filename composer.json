@@ -1,7 +1,7 @@
 {
     "name": "raffaele/laravel_autovalidation",
     "description": "This package provides to autogenerate rules from database constraints with default message and autovalidate your model before save or update.",
-    "type": "library",
+    "keywords": ["laravel", "database", "validation"],
     "license": "MIT",
     "authors": [
         {

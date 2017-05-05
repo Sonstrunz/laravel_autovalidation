@@ -12,11 +12,13 @@ class AutovalidationModel extends \Eloquent {
 
     protected $rules = array();
 
+    protected $redirectTo = '/user/create';
+
     protected $messages = array();
 
-    private $passwordLabelCandidate = array('password');
+    protected $passwordLabelCandidate = array('password', 'passwd');
 
-    private $emailLabelCandidate = array('email');
+    protected $emailLabelCandidate = array('email', 'mail');
 
     /**
      * [boot description]
@@ -35,11 +37,10 @@ class AutovalidationModel extends \Eloquent {
           // and update.
           if($model::$autoValidate) {
               $model->getConstraints();
-                //dd($model->rules);
               $validator = $model->validate();
 
               if($validator != null){
-                redirect()->back()->withInput()->withErrors($validator);
+                redirect($model->redirectTo)->withInput()->withErrors($validator);
                 return false;
               }else{
                 return true;
@@ -92,11 +93,11 @@ class AutovalidationModel extends \Eloquent {
      * @param  [type]   $constraints [description]
      */
     public function setRules($constraints) {
+      $table = $this->getTable();
       if(!in_array($constraints->getName(), $this->notValidate)){
-
         switch ($constraints->getType()->getName()) {
           case 'string':
-            $this->rules[$constraints->getName()] = "alpha_num";
+            $this->rules[$constraints->getName()] = "";
             break;
           case 'integer':
           case 'smallint':
@@ -124,7 +125,7 @@ class AutovalidationModel extends \Eloquent {
           $this->rules[$constraints->getName()] .= "|required";
         }
         if(isset($this->emailLabelCandidate) && in_array($constraints->getName(), $this->emailLabelCandidate)){
-          $this->rules[$constraints->getName()] .= "|email|unique";
+          $this->rules[$constraints->getName()] .= "|email|unique:".$table;
         }else if(isset($this->passwordLabelCandidate) && in_array($constraints->getName(), $this->passwordLabelCandidate)){
           $this->rules[$constraints->getName()] .= "|confirmed";
         }
@@ -132,23 +133,5 @@ class AutovalidationModel extends \Eloquent {
           $this->rules[$constraints->getName()] .= "|max:".$constraints->getLength();
         }
       }
-    }
-
-    /**
-     * [getRules description]
-     * @method getRules
-     * @return [type]   [description]
-     */
-    public function getRules(){
-      return $this->rules;
-    }
-
-    /**
-     * [getMessages description]
-     * @method getMessages
-     * @return [type]      [description]
-     */
-    public function getMessages(){
-      return $this->messages;
     }
 }

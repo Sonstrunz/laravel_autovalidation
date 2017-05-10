@@ -18,7 +18,7 @@ Set in your model $autoValidate = false;
 
 If you wish exclude from validation some field, you have to add those to $notValidate = [] array.
 
-# standard/custom validation message
+# Standard/custom validation message
 
 Automatic validation uses the standarrd messages from laravel validation. If you want it's possibile use your custom messages, override
 $messages array.

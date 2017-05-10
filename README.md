@@ -6,7 +6,8 @@ composer require raffaele/laravel_autovalidation
 
 # Usage Example
 
-class YourModel extends raffaele\ValidationModel{
+class YourModel extends raffaele\ValidationModel
+{
 
 }
 

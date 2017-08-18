@@ -6,23 +6,48 @@ use Illuminate\Support\Facades\Input;
 
 class AutovalidationModel extends \Eloquent {
 
+    /**
+	* Enable/disable autovalidating.
+	*
+	* @var boolean
+	*/
     public static $autoValidate = true;
-
+    
+    /**
+	* Array contains elements which you don't want to validate.
+	*
+	* @var array
+	*/
     public $notValidate = array('id');
 
+    /**
+	* Array contains validate's rules.
+	*
+	* @var array
+	*/
     public $rules = array();
 
+    /**
+	* Array contains messages.
+	*
+	* @var array
+	*/
     public $messages = array();
-
+    
+    /**
+	* Array contains string thats can be password label.
+	*
+	* @var array
+	*/
     public $passwordLabelCandidate = array('password', 'passwd');
 
+    /**
+	* Array contains string thats can be email label.
+	*
+	* @var array
+	*/
     public $emailLabelCandidate = array('email', 'mail');
 
-    /**
-     * [boot description]
-     * @method boot
-     * @return [type] [description]
-     */
     protected static function boot() {
         // This is an important call, makes sure that the model gets booted
         // properly!
@@ -48,9 +73,9 @@ class AutovalidationModel extends \Eloquent {
     }
 
     /**
-     * [validate description]
+     * Validate on create or update method
      * @method validate
-     * @return [type]   [description]
+     * @return validator object
      */
     public function validate(){
       $data = Input::all();
@@ -71,9 +96,9 @@ class AutovalidationModel extends \Eloquent {
     }
 
     /**
-     * [getConstraints description]
+     * Get the constraints from database columns mapped by eloquent model
      * @method getConstraints
-     * @return [type]         [description]
+     * @return void
      */
     public function getConstraints() {
       $table = $this->getTable();
@@ -86,9 +111,9 @@ class AutovalidationModel extends \Eloquent {
     }
 
     /**
-     * [setRules description]
+     * Build validation rules
      * @method setRules
-     * @param  [type]   $constraints [description]
+     * @param  $constraints
      */
     public function setRules($constraints) {
       $table = $this->getTable();
